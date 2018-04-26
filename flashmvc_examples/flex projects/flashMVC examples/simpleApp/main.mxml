@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="test()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="575" height="396" xmlns:ns1="views.*">
+	<mx:Script>
+		<![CDATA[
+			import com.jadbox.flashmvc.SuperModelEvent;
+			import com.jadbox.flashmvc.PerformanceHelper;
+			import com.jadbox.flashmvc.SuperModel;
+			import com.jadbox.flashmvc.*;
+			private function test():void {		
+				SuperApp.gi.addEventListener(SuperModelEvent.MODEL_UPATED, onChange);
+				SuperApp.gi.addEventListener(SuperModelEvent.PERFORMANCE_STATUS, onPerformanceStatus);
+				SuperApp.gi.addEventListener(SuperModelEvent.MODEL_PERFORMING, onModelPerforming);
+				SuperApp.gi.setEnabled(SuperApp.DELETE_CONTACTS, false);
+				SuperApp.gi.perform(SuperApp.ADD_CONTACT, onComplete, "tom", 25);
+				SuperApp.gi.perform("AddContact", onComplete, "betty", 22);
+				
+				///var galleryApp:SuperModel = new SuperModel();
+				//galleryApp.data.galleryXML = new XML();
+				//galleryApp.addPerformance(FetchXML);
+			}
+			private function onModelPerforming(e:SuperModelEvent):void {
+				//trace("Status change on "+e.name, "- busy: "+e.status);
+			}
+			private function onPerformanceStatus(e:SuperModelEvent):void {
+				
+				//trace("onStatus",e.name, e.status);
+			}
+			private function onComplete(e:Object):void {
+				//trace("data", SuperApp.gi.contacts[0].name, "obj ",e);
+				//trace("log " + SuperModel.log.toXMLString());
+			}
+			private function onChange(e:SuperModelEvent):void {
+				//trace("onChange", e.name, e.status);
+				
+			}
+		]]>  
+	</mx:Script>
+	<ns1:addContactView x="0" y="0"/>
+	<ns1:entriesView x="275" y="0" height="167"/>
+	<ns1:EntriesOptions x="10" y="175" width="555"/>
+	<mx:TextArea text="{SuperModel.superModel.log}" x="10" y="245" width="555" height="141" verticalScrollPolicy="on" editable="false"/>
+</mx:Application>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:flashMVC="com.jadbox.flashmvc.flex.*" width="208" height="231">
+	<mx:Script>
+		<![CDATA[
+			import com.actionBinderExample.SuperExampleApp;
+			[Bindable] public var model:SuperExampleApp = SuperExampleApp.getInstance;
+		]]>
+	</mx:Script>
+	<flashMVC:ActionBinder superModel="{model}"
+		 action="{model.LOGIN}"
+		 id="LoginBinder"
+		 actionComplete="{trace('completed, logged in?: ',model.loggedIn)}"
+		 actionEnable="{trace('action enabled')}"
+		 actionDisable="{trace('action disabled')}"
+		 actionPerforming="{trace('working')}"
+		 actionStoppedPerforming="{trace('stopped working')}"
+		/>
+	<mx:VBox horizontalCenter="0">
+		<mx:Label text="Username:"/>
+		<mx:TextInput id="username"/>
+		<mx:Label text="Password:"/>
+		<mx:TextInput id="password"/>
+		<mx:Button label="Submit"
+			enabled="{LoginBinder.actionEnabled}"
+			click="{LoginBinder.perform(username.text,password.text)}"/>
+		<mx:Label text="Is Logged in?: {model.loggedIn?'yes!':'no'}"/>
+		<mx:Label text="Hint: u/p is admin/admin"/>
+	</mx:VBox>
+	
+	<mx:Button label="{LoginBinder.actionEnabled?'Disable Login':'Enable Login'}"
+			click="{LoginBinder.actionEnabled=LoginBinder.actionEnabled?false:true}" right="10" bottom="10"/>
+</mx:Application>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel enabled="{!SuperApp.gi.isPerfoming}" creationComplete="setup()" xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" width="104" title="Options">
+	<mx:Script>
+	<![CDATA[
+	private function setup():void {
+		//trace("hasPerformance del ", SuperApp.gi.isEnabled(SuperApp.DELETE_CONTACTS) );
+	}
+    private function wipe():void {
+    	SuperApp.gi.perform(SuperApp.DELETE_CONTACTS);
+    }
+	]]>
+   </mx:Script>
+   <mx:HBox>
+	<mx:Button x="0" y="0" label="Delete All" 
+		click="{wipe()}" 
+		visible="{SuperApp.gi.hasPerformance(SuperApp.DELETE_CONTACTS)}"
+		enabled="{SuperApp.gi.isEnabled(SuperApp.DELETE_CONTACTS)}"/>
+	<mx:Button x="0" y="0" label="Enabled DeleteContacks" 
+		click="{SuperApp.gi.setEnabled(SuperApp.DELETE_CONTACTS)}" 
+		enabled="{SuperApp.gi.hasPerformance(SuperApp.DELETE_CONTACTS)}"/>
+	<mx:Button x="0" y="0" label="Remove DeleteContacks" 
+		click="{SuperApp.gi.performanceRemove(SuperApp.DELETE_CONTACTS)}" />
+	</mx:HBox>
+</mx:Panel>

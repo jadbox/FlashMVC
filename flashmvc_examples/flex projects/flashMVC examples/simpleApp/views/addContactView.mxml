@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Panel enabled="{!SuperApp.gi.isPerfoming}" xmlns:mx="http://www.adobe.com/2006/mxml" width="272" height="167" layout="absolute" title="Add Contact">
+		<mx:Script>
+			<![CDATA[				
+				private function send():void {
+					SuperApp.gi.perform(SuperApp.ADD_CONTACT, onAdded, UserName.text, int(UserPhone.text));
+				}
+				private function onAdded(e:Object):void {
+					UserName.text="";
+					UserPhone.text="";
+				}
+			]]>
+		</mx:Script>
+		<mx:TextInput x="82" y="10" id="UserName" />
+		<mx:TextInput x="82" y="40" id="UserPhone" />
+		<mx:Button x="193" y="84" id="btnAdd" label="Add" click="{send()}" />
+		<mx:Label x="22" y="12" text="Name" />
+		<mx:Label x="22" y="42" text="Phone" />
+	</mx:Panel>

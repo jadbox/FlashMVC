@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Panel creationComplete="setup()" xmlns:mx="http://www.adobe.com/2006/mxml" width="290" layout="absolute" title="View">
+		<mx:Script>
+			<![CDATA[
+			import com.jadbox.flashmvc.SuperModelEvent;
+			public function setup():void {
+				SuperApp.gi.addEventListener(SuperModelEvent.MODEL_UPATED, onUpdate);				
+			}
+			public function onUpdate(e:SuperModelEvent):void {
+				dg.dataProvider = SuperApp.gi.contacts;
+			}
+			]]>
+		</mx:Script>
+		<mx:DataGrid id="dg" x="0" y="0" width="270" height="100%" dataProvider="{SuperApp.gi.contacts}" >
+			<mx:columns>
+				<mx:DataGridColumn headerText="Name" dataField="name"/>
+				<mx:DataGridColumn headerText="Phone" dataField="phone"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Panel>

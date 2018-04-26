@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="start()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="246" height="80">
+	<mx:Script>
+		<![CDATA[
+			import com.jadbox.flashmvc2.SuperLogger;
+			import com.jadbox.flashmvc2.SuperEvent;
+			import example.*;
+			
+			public function start():void {
+				SuperWebsite.gi.actionLogin.addEventListener(SuperEvent.COMPLETE, onLogin);
+				SuperWebsite.gi.actionInit.addEventListener(SuperEvent.COMPLETE, onInit);
+				
+				SuperWebsite.gi.addEventsListener(SuperEvent.COMPLETE, onActionComplete, LoginEvent);
+				
+				SuperWebsite.gi.actionInit.runEvent();
+			}
+			private function onActionComplete(e:SuperEvent):void {
+				trace("general event");
+			}
+			private function onInit(e:SuperEvent):void {
+				trace("init complete");
+			}
+			private function clickLogin():void {
+				SuperWebsite.gi.runEvent(new LoginEvent(email.text));
+			}
+			
+			private function onLogin(e:LoginEvent):void {
+				trace("test ", LoginEvent(SuperWebsite.gi.actionLogin.lastSuperEvent).errorWasInvalid);
+				if(e.successful) {
+					trace("Success on login for email "+ e.email);
+					status.text = "Welcome " + SuperWebsite.gi.user_profile;
+				}
+				if(e.errorWasBlank) status.text = "email was blank";
+				else if(e.errorWasInvalid) status.text = "email was invalid";	
+			}
+		]]>
+	</mx:Script>
+	<mx:Button x="178" y="24" label="Login" click="clickLogin()"/>
+	<mx:TextInput x="10" y="24" id="email" text="test@test.com"/>
+	<mx:Label x="10" y="6" text="Login" id="status"/>
+	<mx:Button x="10" y="54" label="Trace Log" click="{trace(SuperLogger.logString); trace('email is ',SuperWebsite.gi.email); }"/>
+</mx:Application>
